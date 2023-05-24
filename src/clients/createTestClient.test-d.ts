@@ -10,7 +10,7 @@ test('with chain', () => {
     mode: 'anvil',
     transport: http(),
   })
-  expectTypeOf(client).toMatchTypeOf<TestClient>()
+  expectTypeOf(client).toMatchTypeOf<TestClient<'anvil'>>()
   expectTypeOf(client.mode).toEqualTypeOf<'anvil'>()
   expectTypeOf(client.chain).toEqualTypeOf(localhost)
 })
@@ -20,6 +20,6 @@ test('without chain', () => {
     mode: 'anvil',
     transport: http(),
   })
-  expectTypeOf(client).toMatchTypeOf<TestClient>()
+  expectTypeOf(client).toMatchTypeOf<TestClient<'anvil'>>()
   expectTypeOf(client.chain).toEqualTypeOf(undefined)
 })

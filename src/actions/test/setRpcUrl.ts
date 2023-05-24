@@ -25,12 +25,12 @@ import type { Chain } from '../../types/chain.js'
  * })
  * await setRpcUrl(client, 'https://eth-mainnet.g.alchemy.com/v2')
  */
-export async function setRpcUrl<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
-  jsonRpcUrl: string,
-) {
-  await client.request({
-    method: `${client.mode}_setRpcUrl`,
+export async function setRpcUrl<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(client: TestClient<TMode, Transport, TChain>, jsonRpcUrl: string) {
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_setRpcUrl`,
     params: [jsonRpcUrl],
   })
 }

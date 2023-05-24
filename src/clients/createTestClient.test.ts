@@ -2,8 +2,8 @@ import { assertType, describe, expect, test, vi } from 'vitest'
 
 import { localWsUrl } from '../_test/constants.js'
 import { localhost } from '../chains.js'
-import type { TestRequests } from '../types/eip1193.js'
 
+import { type RpcRequestFn, type TestRpcMethods } from '../index.js'
 import { createTestClient } from './createTestClient.js'
 import { createTransport } from './transports/createTransport.js'
 import { http } from './transports/http.js'
@@ -23,7 +23,7 @@ test('creates', () => {
     transport: mockTransport,
   })
 
-  assertType<TestRequests<'anvil'>['request']>(client.request)
+  assertType<RpcRequestFn<TestRpcMethods<'anvil'>>>(client.request)
   expect(uid).toBeDefined()
   expect(client).toMatchInlineSnapshot(`
     {

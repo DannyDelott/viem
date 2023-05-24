@@ -38,12 +38,15 @@ export type SetBalanceParameters = {
  *   value: parseEther('1'),
  * })
  */
-export async function setBalance<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function setBalance<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { address, value }: SetBalanceParameters,
 ) {
-  await client.request({
-    method: `${client.mode}_setBalance`,
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_setBalance`,
     params: [address, numberToHex(value)],
   })
 }

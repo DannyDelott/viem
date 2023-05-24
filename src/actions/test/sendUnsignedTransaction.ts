@@ -38,13 +38,14 @@ export type SendUnsignedTransactionReturnType = Hash
  * })
  */
 export async function sendUnsignedTransaction<
+  TMode extends TestClientMode,
   TChain extends Chain | undefined,
 >(
-  client: TestClient<TestClientMode, Transport, TChain>,
+  client: TestClient<TMode, Transport, TChain>,
   request: SendUnsignedTransactionParameters,
 ): Promise<SendUnsignedTransactionReturnType> {
   const request_ = formatTransactionRequest(request)
-  const hash = await client.request({
+  const hash = await (client as unknown as TestClient<TestClientMode>).request({
     method: 'eth_sendUnsignedTransaction',
     params: [request_],
   })

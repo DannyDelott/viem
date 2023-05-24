@@ -31,10 +31,15 @@ export type GetTxpoolStatusReturnType = {
  * })
  * const status = await getTxpoolStatus(client)
  */
-export async function getTxpoolStatus<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function getTxpoolStatus<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
 ): Promise<GetTxpoolStatusReturnType> {
-  const { pending, queued } = await client.request({
+  const { pending, queued } = await (
+    client as unknown as TestClient<TestClientMode>
+  ).request({
     method: 'txpool_status',
   })
   return {

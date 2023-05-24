@@ -1,7 +1,7 @@
 import type { Abi } from 'abitype'
 
 import type { MaybeExtractEventArgsFromAbi } from './contract.js'
-import type { Requests } from './eip1193.js'
+import type { PublicRpcMethods, RpcRequestFn } from './eip1193.js'
 import type { Hex } from './misc.js'
 
 export type FilterType = 'transaction' | 'block' | 'event'
@@ -16,7 +16,7 @@ export type Filter<
 > = {
   id: Hex
   // TODO: Narrow `request` to filter-based methods (ie. `eth_getFilterLogs`, etc).
-  request: Requests['request']
+  request: RpcRequestFn<PublicRpcMethods>
   type: TFilterType
 } & (TFilterType extends 'event'
   ? TAbi extends Abi

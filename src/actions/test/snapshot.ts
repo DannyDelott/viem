@@ -24,10 +24,11 @@ import type { Chain } from '../../types/chain.js'
  * })
  * await snapshot(client)
  */
-export async function snapshot<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
-) {
-  return await client.request({
+export async function snapshot<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(client: TestClient<TMode, Transport, TChain>) {
+  return await (client as unknown as TestClient<TestClientMode>).request({
     method: 'evm_snapshot',
   })
 }

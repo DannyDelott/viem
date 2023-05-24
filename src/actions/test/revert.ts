@@ -31,11 +31,11 @@ export type RevertParameters = {
  * })
  * await revert(client, { id: '0x…' })
  */
-export async function revert<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
-  { id }: RevertParameters,
-) {
-  await client.request({
+export async function revert<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(client: TestClient<TMode, Transport, TChain>, { id }: RevertParameters) {
+  await (client as unknown as TestClient<TestClientMode>).request({
     method: 'evm_revert',
     params: [id],
   })

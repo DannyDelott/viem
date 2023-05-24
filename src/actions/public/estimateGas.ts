@@ -9,6 +9,7 @@ import type { GetAccountParameter } from '../../types/account.js'
 import type { BlockTag } from '../../types/block.js'
 import type { Chain } from '../../types/chain.js'
 import type { Formatter } from '../../types/formatter.js'
+import type { RpcTransactionRequest } from '../../types/rpc.js'
 import type { TransactionRequest } from '../../types/transaction.js'
 import type { MergeIntersectionProperties } from '../../types/utils.js'
 import { numberToHex } from '../../utils/encoding/toHex.js'
@@ -133,9 +134,9 @@ export async function estimateGas<
       {
         formatter: formatter || formatTransactionRequest,
       },
-    )
+    ) as RpcTransactionRequest
 
-    const balance = await client.request({
+    const balance = await (client as PublicClient).request({
       method: 'eth_estimateGas',
       params: block ? [request, block] : [request],
     })

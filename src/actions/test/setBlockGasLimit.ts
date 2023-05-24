@@ -31,11 +31,14 @@ export type SetBlockGasLimitParameters = {
  * })
  * await setBlockGasLimit(client, { gasLimit: 420_000n })
  */
-export async function setBlockGasLimit<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function setBlockGasLimit<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { gasLimit }: SetBlockGasLimitParameters,
 ) {
-  await client.request({
+  await (client as unknown as TestClient<TestClientMode>).request({
     method: 'evm_setBlockGasLimit',
     params: [numberToHex(gasLimit)],
   })

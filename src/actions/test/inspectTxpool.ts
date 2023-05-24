@@ -32,10 +32,13 @@ export type InspectTxpoolReturnType = {
  * })
  * const data = await inspectTxpool(client)
  */
-export async function inspectTxpool<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function inspectTxpool<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
 ): Promise<InspectTxpoolReturnType> {
-  return await client.request({
+  return await (client as unknown as TestClient<TestClientMode>).request({
     method: 'txpool_inspect',
   })
 }

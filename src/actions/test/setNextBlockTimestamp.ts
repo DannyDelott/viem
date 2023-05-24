@@ -31,11 +31,14 @@ export type SetNextBlockTimestampParameters = {
  * })
  * await setNextBlockTimestamp(client, { timestamp: 1671744314n })
  */
-export async function setNextBlockTimestamp<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function setNextBlockTimestamp<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { timestamp }: SetNextBlockTimestampParameters,
 ) {
-  await client.request({
+  await (client as unknown as TestClient<TestClientMode>).request({
     method: 'evm_setNextBlockTimestamp',
     params: [numberToHex(timestamp)],
   })

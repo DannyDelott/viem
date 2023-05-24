@@ -441,19 +441,21 @@ export {
 } from './types/misc.js'
 export type { Chain } from './types/chain.js'
 export type {
+  AddEthereumChainParameter,
   EIP1193Provider,
+  EIP1474Methods,
   ProviderRpcError as EIP1193ProviderRpcError,
   ProviderConnectInfo,
   ProviderMessage,
-  AddEthereumChainParameter,
+  PublicRpcMethods,
   NetworkSync,
-  PublicRequests,
-  Requests,
-  SignableRequests,
+  RpcMethods,
+  RpcRequestFn,
+  TestRpcMethods,
   WatchAssetParams,
   WalletPermissionCaveat,
   WalletPermission,
-  WalletRequests,
+  WalletRpcMethods,
 } from './types/eip1193.js'
 export {
   type FeeHistory,

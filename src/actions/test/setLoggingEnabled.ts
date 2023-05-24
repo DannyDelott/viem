@@ -24,12 +24,12 @@ import type { Chain } from '../../types/chain.js'
  * })
  * await setLoggingEnabled(client)
  */
-export async function setLoggingEnabled<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
-  enabled: boolean,
-) {
-  await client.request({
-    method: `${client.mode}_setLoggingEnabled`,
+export async function setLoggingEnabled<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(client: TestClient<TMode, Transport, TChain>, enabled: boolean) {
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_setLoggingEnabled`,
     params: [enabled],
   })
 }

@@ -35,10 +35,13 @@ export type GetTxpoolContentReturnType = {
  * })
  * const content = await getTxpoolContent(client)
  */
-export async function getTxpoolContent<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function getTxpoolContent<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
 ): Promise<GetTxpoolContentReturnType> {
-  return await client.request({
+  return await (client as unknown as TestClient<TestClientMode>).request({
     method: 'txpool_content',
   })
 }

@@ -42,12 +42,15 @@ export type SetStorageAtParameters = {
  *   value: '0x0000000000000000000000000000000000000000000000000000000000000069',
  * })
  */
-export async function setStorageAt<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function setStorageAt<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { address, index, value }: SetStorageAtParameters,
 ) {
-  await client.request({
-    method: `${client.mode}_setStorageAt`,
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_setStorageAt`,
     params: [
       address,
       typeof index === 'number' ? numberToHex(index) : index,

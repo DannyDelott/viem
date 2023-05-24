@@ -33,11 +33,14 @@ export type IncreaseTimeParameters = {
  *   seconds: 420,
  * })
  */
-export async function increaseTime<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function increaseTime<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { seconds }: IncreaseTimeParameters,
 ) {
-  return await client.request({
+  return await (client as unknown as TestClient<TestClientMode>).request({
     method: 'evm_increaseTime',
     params: [numberToHex(seconds)],
   })

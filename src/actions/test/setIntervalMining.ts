@@ -30,11 +30,14 @@ export type SetIntervalMiningParameters = {
  * })
  * await setIntervalMining(client, { interval: 5 })
  */
-export async function setIntervalMining<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function setIntervalMining<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { interval }: SetIntervalMiningParameters,
 ) {
-  await client.request({
+  await (client as unknown as TestClient<TestClientMode>).request({
     method: 'evm_setIntervalMining',
     params: [interval],
   })

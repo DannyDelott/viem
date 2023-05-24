@@ -35,13 +35,14 @@ export type StopImpersonatingAccountParameters = {
  * })
  */
 export async function stopImpersonatingAccount<
+  TMode extends TestClientMode,
   TChain extends Chain | undefined,
 >(
-  client: TestClient<TestClientMode, Transport, TChain>,
+  client: TestClient<TMode, Transport, TChain>,
   { address }: StopImpersonatingAccountParameters,
 ) {
-  await client.request({
-    method: `${client.mode}_stopImpersonatingAccount`,
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_stopImpersonatingAccount`,
     params: [address],
   })
 }

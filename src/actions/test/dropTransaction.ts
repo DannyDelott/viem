@@ -33,12 +33,15 @@ export type DropTransactionParameters = {
  *   hash: '0xe58dceb6b20b03965bb678e27d141e151d7d4efc2334c2d6a49b9fac523f7364'
  * })
  */
-export async function dropTransaction<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function dropTransaction<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { hash }: DropTransactionParameters,
 ) {
-  await client.request({
-    method: `${client.mode}_dropTransaction`,
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_dropTransaction`,
     params: [hash],
   })
 }

@@ -1,22 +1,18 @@
 import type { Chain } from '../../types/chain.js'
-import type { Requests } from '../../types/eip1193.js'
+import type { RpcRequestFn } from '../../types/eip1193.js'
 import { buildRequest } from '../../utils/buildRequest.js'
 import type { ClientConfig } from '../createClient.js'
 
-export type BaseRpcRequests = {
-  request(...args: any): Promise<any>
-}
-
 export type TransportConfig<
   TType extends string = string,
-  TRequests extends BaseRpcRequests['request'] = Requests['request'],
+  TRpcRequestFn extends RpcRequestFn = RpcRequestFn,
 > = {
   /** The name of the transport. */
   name: string
   /** The key of the transport. */
   key: string
   /** The JSON-RPC request function that matches the EIP-1193 request spec. */
-  request: TRequests
+  request: TRpcRequestFn
   /** The base delay (in ms) between retries. */
   retryDelay?: number
   /** The max number of times to retry. */
@@ -30,7 +26,7 @@ export type TransportConfig<
 export type Transport<
   TType extends string = string,
   TRpcAttributes = Record<string, any>,
-  TRequests extends BaseRpcRequests['request'] = Requests['request'],
+  TRpcRequestFn extends RpcRequestFn = RpcRequestFn,
 > = <TChain extends Chain | undefined = Chain>({
   chain,
 }: {
@@ -40,7 +36,7 @@ export type Transport<
   timeout?: TransportConfig['timeout']
 }) => {
   config: TransportConfig<TType>
-  request: TRequests
+  request: TRpcRequestFn
   value?: TRpcAttributes
 }
 

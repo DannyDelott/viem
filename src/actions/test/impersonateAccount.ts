@@ -34,12 +34,15 @@ export type ImpersonateAccountParameters = {
  *   address: '0xA0Cf798816D4b9b9866b5330EEa46a18382f251e',
  * })
  */
-export async function impersonateAccount<TChain extends Chain | undefined>(
-  client: TestClient<TestClientMode, Transport, TChain>,
+export async function impersonateAccount<
+  TMode extends TestClientMode,
+  TChain extends Chain | undefined,
+>(
+  client: TestClient<TMode, Transport, TChain>,
   { address }: ImpersonateAccountParameters,
 ) {
-  await client.request({
-    method: `${client.mode}_impersonateAccount`,
+  await (client as unknown as TestClient<TestClientMode>).request({
+    method: `${client.mode as TestClientMode}_impersonateAccount`,
     params: [address],
   })
 }
