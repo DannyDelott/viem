@@ -39,7 +39,7 @@ parseUnits('420', 9) // [!code focus:2]
 
 ### value
 
-- **Type:** `string`
+- **Type:** <code>&#96;${number}&#96;</code>
 
 The string representation of the number to multiply.
 
